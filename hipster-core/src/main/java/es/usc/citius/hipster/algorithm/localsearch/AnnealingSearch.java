@@ -66,6 +66,7 @@ public class AnnealingSearch<A, S, N extends HeuristicNode<A, S, Double, N>> ext
 	private SuccessorFinder<A, S, N> successorFinder;
 	// expander to find all the successors of a given node.
 	private NodeExpander<A, S, N> nodeExpander;
+	private Random randIndGen = new Random();
 
 	public AnnealingSearch(N initialNode, NodeExpander<A, S, N> nodeExpander, Double alpha, Double minTemp,
 			AcceptanceProbability acceptanceProbability, SuccessorFinder<A, S, N> successorFinder) {
@@ -116,8 +117,7 @@ public class AnnealingSearch<A, S, N extends HeuristicNode<A, S, Double, N>> ext
 					for (N successor : nodeExpander.expand(node)) {
 						successors.add(successor);
 					}
-					Random randIndGen = new Random();
-					return successors.get(Math.abs(randIndGen.nextInt()) % successors.size());
+					return successors.get(Math.abs(this.randIndGen.nextInt()) % successors.size());
 				}
 			};
 		}
@@ -201,3 +201,4 @@ public class AnnealingSearch<A, S, N extends HeuristicNode<A, S, Double, N>> ext
 		N estimate(N node, NodeExpander<A, S, N> nodeExpander);
 	}
 }
+
